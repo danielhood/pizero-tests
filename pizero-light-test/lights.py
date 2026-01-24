@@ -9,12 +9,14 @@ try:
     led1 = LED(5)
     led2 = LED(7)
     led3 = LED(9)
-    led4 = LED(15)
+    led4 = LED(11)
+    led5 = LED(15) # pin 13 is used for pcm audio
 
     led1.off()
     led2.off()
     led3.off()
     led4.off()
+    led5.off()
 
     while True:
         print ("sparkling!")
@@ -35,12 +37,17 @@ try:
                 led4.on()
             else:
                 led4.off()
+            if i % 5 == 0:
+                led5.on()
+            else:
+                led5.off()
             sleep(0.1)
 
         led1.off()
         led2.off()
         led3.off()
         led4.off()
+        led5.off()
 
         sleep(1)
 

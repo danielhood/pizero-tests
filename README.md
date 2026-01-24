@@ -1,56 +1,61 @@
 # pizero-light-test
 
-A small example project that demonstrates controlling LEDs on a Raspberry Pi Zero (or compatible Pi) using `gpiozero`.
+A minimal example that blinks five LEDs on a Raspberry Pi Zero (or compatible Pi) using `gpiozero`.
 
 **Files**
-- `pizero-light-test/lights.py`  main script that blinks four LEDs in a simple pattern.
+- `pizero-light-test/lights.py`  main script that blinks 5 LEDs in a repeating pattern.
 
-**Overview**
-This repository contains a minimal script to exercise GPIO outputs on a Raspberry Pi. It's useful for hardware testing or learning how to use `gpiozero` with physical LEDs.
-
-**Requirements**
+**Quickstart**
+Requirements:
 - Python 3.8+ (3.11 recommended)
-- On Raspberry Pi hardware: `gpiozero` (which will use an appropriate pin backend such as `RPi.GPIO` or `pigpio`).
+- On Raspberry Pi: `gpiozero` (it will select a suitable backend such as `RPi.GPIO` or `pigpio`).
 
-**Setup**
-1. (Optional) Create and activate a virtual environment:
-
+Setup:
 ```bash
 python -m venv .venv
-.venv\Scripts\activate    # Windows
+.venv\Scripts\activate    # Windows (PowerShell/Cmd)
 source .venv/bin/activate  # Linux / macOS
-```
-
-2. Install the dependency (on the Pi):
-
-```bash
 pip install gpiozero
 ```
 
-**Wiring**
-- The script uses BCM GPIO pin numbers: 5, 7, 9, and 15 (as configured in `lights.py`).
-- Confirm whether you are using BCM or physical (BOARD) numbering when wiring; `gpiozero` uses BCM by default.
+Run (from repo root):
+```bash
+python pizero-light-test/lights.py
+# or explicitly
+python ./pizero-light-test/lights.py
+```
+Stop with `Ctrl+C`.
 
-**Usage**
-- Run the script on a Raspberry Pi:
+**Pin mapping (BCM numbers)**
+- LED 1: BCM 5
+- LED 2: BCM 7
+- LED 3: BCM 9
+- LED 4: BCM 11
+- LED 5: BCM 15  (note: BCM 13 / physical pin 33 is reserved for PCM audio in some Pi models)
+
+Notes:
+- `gpiozero` uses BCM numbering by default. Verify wiring before powering your hardware.
+
+Testing / development on non-Pi systems:
+- To run without hardware, use `gpiozero`'s mock pin factory. Example (bash):
 
 ```bash
+export GPIOZERO_PIN_FACTORY=mock
 python pizero-light-test/lights.py
 ```
 
-- Or, from the repository root using the explicit path:
-
-```bash
+PowerShell example:
+```powershell
+$env:GPIOZERO_PIN_FACTORY = 'mock'
 python pizero-light-test/lights.py
 ```
 
-- Stop with `Ctrl+C`.
+Troubleshooting:
+- Import errors for `gpiozero` indicate the package is not installed in the active Python environment.
+- If LEDs don't behave as expected, double-check pin numbering (BCM vs BOARD), wiring, and resistor placement.
 
-**Notes**
-- On non-Raspberry Pi systems, importing `gpiozero` may fail or not control real hardware. For development or CI, consider using `gpiozero`'s mock pin factory (`GPIOZERO_PIN_FACTORY=mock`) or run the script on a Pi.
+Contributing:
+- PRs and issues welcome. Keep hardware changes documented in the README.
 
-**Contributing**
-- Pull requests and issues welcome. Keep changes focused and add short usage notes for hardware changes.
-
-**License**
+License:
 - MIT
