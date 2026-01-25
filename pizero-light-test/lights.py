@@ -45,9 +45,9 @@ try:
 
         led1.off()
         led2.off()
-        led3.on()
-        led4.on()
-        led5.on()
+        led3.off()
+        led4.off()
+        led5.off()
 
         sleep(1)
 
