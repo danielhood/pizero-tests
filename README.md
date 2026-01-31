@@ -2,16 +2,57 @@
 
 Test suite for Raspberry Pi Zero GPIO and I2C functionality.
 
-**Files**
+##Files
 - `pizero-light-test/lights.py` - Main script that blinks 5 LEDs in a repeating pattern using `gpiozero`.
 - `pizero-i2c-test/i2c.py` - I2C send/receive test script that sends "alive!" every 10 seconds and prints any incoming messages.
 
-**Quickstart**
+## Quickstart
 Requirements:
 - Python 3.8+ (3.11 recommended)
 - On Raspberry Pi: `gpiozero` and `smbus-cffi` for I2C support.
 
-Setup:
+### Setup:
+
+#### /boot/firmware/config.txt
+##### I2C:
+To load i2c_bcm2835, uncomment (or add if not present) the following line in config.txt to enable the primary I2C interface on GPIO pins 2 (SDA) and 3 (SCL):
+
+```
+dtparam=i2c_arm=on
+```
+
+(Optional) Adjust I2C Speed: The default I2C baudrate is 100,000 Hz which is usually fine for most applications. If needed (e.g., for faster communication up to 400,000 Hz), you can add another line to specify a new baudrate:
+
+```
+dtparam=i2c_arm_baudrate=400000
+```
+
+Once config.txt is updated to load the i2c module, and the pizero is rebooted, enable i2c through `sudo raspi-config` under **3 Interfacing Options > I5 I2C**.
+
+ Verify that I2C is enabled by checking the following (all need to return things): 
+
+```lsmod | grep i2c
+ls /dev/i2c*
+i2cdetect -l
+```
+##### PWM Audio:
+
+```
+dtoverlay=audremap,pins_12_13
+```
+Enable audio (loads snd_bcm2835)
+```
+dtparam=audio=on
+```
+
+Increase the audio level using `alsamixer`.
+
+Test aduio with (note this will test both channels, but h/w may only be setup for one channel):
+```
+speaker-test -t sine -f 440 -c 2
+```
+
+#### Packages
 ```bash
 sudo apt-get update 
 sudo apt-get upgrade
