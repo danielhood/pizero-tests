@@ -7,32 +7,40 @@ try:
 
     # I2C configuration
     i2c_address = 0x68  # Default I2C address (change as needed)
+
+    print ('Creating smbus...')
     i2c_bus = smbus.SMBus(1)  # Bus 1 for Raspberry Pi Zero
-    
+
+    print ('Creating leds...')
     # Pin number can be BCM or physical
     # gpiozero uses BCM by default
     led1 = LED(5)
 
+    print ('Clearing led state...')
     led1.off()
-    
+
     last_send_time = time()
+
+    print('Starting main loop...')
 
     while True:
         current_time = time()
-        
+
         # Send "alive!" every 10 seconds
         if current_time - last_send_time >= 10:
             try:
                 message = "alive!"
                 # Send as byte string
+                print('Sending message...')
                 i2c_bus.write_i2c_block_data(i2c_address, 0, [ord(c) for c in message])
                 print(f"Sent: {message}")
                 last_send_time = current_time
             except Exception as e:
                 print(f"Error sending I2C message: {e}")
-        
+
         # Try to receive incoming data
         try:
+            print('Attempting read...')
             data = i2c_bus.read_i2c_block_data(i2c_address, 0, 32)
             if data:
                 message = ''.join([chr(b) for b in data if b != 0])
@@ -40,7 +48,7 @@ try:
                     print(f"Received: {message}")
         except Exception as e:
             pass  # Silently ignore read errors when no data available
-        
+
         # LED blink pattern
         for i in range(1, 32):
             if i % 2 == 0:
@@ -58,3 +66,4 @@ except KeyboardInterrupt:
 except Exception as e:
     print ("General error occurred\n")
     print (e)
+    

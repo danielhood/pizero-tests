@@ -1,6 +1,6 @@
 # PiZero Raspbian Config.txt Files
 
-This folder contains various Config.txt files used for the PiZero installation for various hardware configurations. The files are deployed to the root of the bootfx partition.
+This folder contains various Config.txt files used for the PiZero installation for various hardware configurations. The config.txt file is deployed to the /firmware folder of the bootfs partition (e.g. /boot/firmware/config.txt).
 
 ## 2026-01-06
 Enables stereo PWM audio on PiZero under Trixie
