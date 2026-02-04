@@ -1,0 +1,6 @@
+{
+    "CodeGPT.apiKey": "Ollama",
+    "twinny.ollamaHostname": "bender.local",
+    "vscode-ollama.model": "qwen2.5-coder:3b",
+    "vscode-ollama.baseUrl": "http://bender.local:11434"
+}

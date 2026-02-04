@@ -6,7 +6,7 @@ try:
     print('Ready')
 
     # I2C configuration
-    i2c_address = 0x68  # Default I2C address (change as needed)
+    i2c_address = 0x60  # Target I2C address (master device address)
 
     print ('Creating smbus...')
     i2c_bus = smbus.SMBus(1)  # Bus 1 for Raspberry Pi Zero
@@ -66,4 +66,3 @@ except KeyboardInterrupt:
 except Exception as e:
     print ("General error occurred\n")
     print (e)
-    
