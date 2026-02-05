@@ -7,3 +7,6 @@ Enables stereo PWM audio on PiZero under Trixie
 
 ## 2026-01-31
 Enables stereo PWM audio and I2C on PiZero under Trixie
+
+## 2026-02-04
+Enables stereo PWM audio and SPI on PiZero under Trixie
